@@ -18,7 +18,7 @@ Use this page when you help a person run the arm or write code against `rebot_co
 ## Install
 
 ```bash
-pip install -e ".[sim]"          # simulation, any OS
+pip install -e ".[sim]"          # simulation: Linux, macOS
 pip install -e ".[real,sim]"     # real arm: Linux, SocketCAN, can0 up
 ```
 

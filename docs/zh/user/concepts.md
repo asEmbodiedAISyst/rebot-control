@@ -22,7 +22,7 @@ your loop (30 Hz)  ->  joint target filter  ->  servo loop (150 Hz)  ->  motors 
 后端把控制代码接到一台机械臂上。后端有两种：
 
 - `real`：SocketCAN 上的 RobStride 电机。需要 Linux 和 `real` extra。
-- `sim`：同一台机械臂的 MuJoCo 模型。任何操作系统都能运行，需要 `sim` extra。
+- `sim`：同一台机械臂的 MuJoCo 模型。在 Linux 和 macOS 上都能运行，需要 `sim` extra。
 
 两种后端用的是同一套控制代码。在仿真里能跑的脚本，把 `backend="sim"` 改成 `backend="real"` 就能在真机上跑。
 

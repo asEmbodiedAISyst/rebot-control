@@ -8,7 +8,7 @@ Python 3.10 or newer.
 git clone https://github.com/asEmbodiedAISyst/rebot-control.git && cd rebot-control
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[real,sim]"     # real arm + simulator
-# pip install -e ".[sim]"        # simulator only (macOS / Windows / no arm)
+# pip install -e ".[sim]"        # simulator only (no arm)
 ```
 
 | Extra | Pulls in | Needed for |
@@ -19,6 +19,19 @@ pip install -e ".[real,sim]"     # real arm + simulator
 | `dev` | pytest, ruff, mujoco | development |
 
 Check the install with `rebot-control state --sim`. It prints the simulated arm's state.
+
+### Platforms
+
+| System | Simulation | Real arm |
+| --- | --- | --- |
+| Linux | yes | yes |
+| macOS | yes | no |
+| Windows | not verified | no |
+
+The real arm needs SocketCAN, which only Linux has.
+
+Windows is not verified and not tested. PyPI has no Windows build of Pinocchio, so the `pip install` command
+above fails there.
 
 ## CAN adapter (real arm)
 

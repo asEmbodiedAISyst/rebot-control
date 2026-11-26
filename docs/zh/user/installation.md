@@ -8,7 +8,7 @@
 git clone https://github.com/asEmbodiedAISyst/rebot-control.git && cd rebot-control
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[real,sim]"     # real arm + simulator
-# pip install -e ".[sim]"        # simulator only (macOS / Windows / no arm)
+# pip install -e ".[sim]"        # simulator only (no arm)
 ```
 
 | Extra | 安装的包 | 用途 |
@@ -19,6 +19,18 @@ pip install -e ".[real,sim]"     # real arm + simulator
 | `dev` | pytest、ruff、mujoco | 开发 |
 
 装好后运行 `rebot-control state --sim` 检查。它会打印仿真机械臂的状态。
+
+### 平台
+
+| 系统 | 仿真 | 真机 |
+| --- | --- | --- |
+| Linux | 支持 | 支持 |
+| macOS | 支持 | 不支持 |
+| Windows | 未验证 | 不支持 |
+
+真机需要 SocketCAN，只有 Linux 提供。
+
+Windows 未经验证，也没有做过测试。PyPI 上没有 Pinocchio 的 Windows 版本，所以上面的 `pip install` 命令在 Windows 上会失败。
 
 ## CAN 适配器（真机）
 

@@ -57,4 +57,4 @@ html_sidebars = {
     ]
 }
 # Link to the same page of the other language (see _templates/sidebar/language.html).
-html_context = {"other_language_label": "简体中文", "other_language_root": "../zh/"}
+html_context = {"other_language_label": "中文", "other_language_root": "../zh/"}

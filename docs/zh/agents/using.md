@@ -18,7 +18,7 @@
 ## 安装
 
 ```bash
-pip install -e ".[sim]"          # simulation, any OS
+pip install -e ".[sim]"          # simulation: Linux, macOS
 pip install -e ".[real,sim]"     # real arm: Linux, SocketCAN, can0 up
 ```
 

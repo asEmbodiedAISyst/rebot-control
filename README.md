@@ -1,6 +1,6 @@
 # rebot-control
 
-English | [简体中文](README.zh-CN.md)
+English | [中文](https://github.com/asEmbodiedAISyst/rebot-control/blob/main/README.zh-CN.md)
 
 Cartesian control, configurable tools and self-calibration for the **Seeed reBot Arm B601-RS**
 (6 RobStride motors on SocketCAN), with a MuJoCo simulator that runs the same control code.
@@ -8,14 +8,17 @@ Cartesian control, configurable tools and self-calibration for the **Seeed reBot
 Mount a tool, describe it in a small YAML file (TCP pose and payload), calibrate it, and command the tool tip
 in Cartesian space.
 
+This project is an independent implementation. It is not affiliated with Seeed Studio, and Seeed Studio does not
+endorse it.
+
 > **Status: 0.1.0, pre-release.** The automated tests run in simulation only, and real-arm validation is in
-> progress. This library drives a real robot arm: read the [safety page](docs/user/safety.md) before you power one.
+> progress. This library drives a real robot arm: read the [safety page](https://asembodiedaisyst.github.io/rebot-control/en/user/safety.html) before you power one.
 
 ## Install
 
 ```bash
 git clone https://github.com/asEmbodiedAISyst/rebot-control.git && cd rebot-control
-pip install -e ".[sim]"          # simulation only (any OS)
+pip install -e ".[sim]"          # simulation only (Linux, macOS)
 pip install -e ".[real,sim]"     # + motorbridge for the real arm (Linux + SocketCAN)
 ```
 
@@ -43,12 +46,12 @@ Website: <https://asembodiedaisyst.github.io/rebot-control/>
 
 | Reader | Start here |
 | --- | --- |
-| Users | [docs/user/](docs/user/index.md): installation, quick start, tools, Cartesian control, calibration, safety |
-| Developers | [docs/developer/](docs/developer/index.md): architecture, conventions, design decisions, testing |
-| AI agents | [AGENTS.md](AGENTS.md), [docs/agents/](docs/agents/index.md); the website publishes `llms.txt` and `llms-full.txt` |
+| Users | [User guide](https://asembodiedaisyst.github.io/rebot-control/en/user/): installation, quick start, tools, Cartesian control, calibration, safety |
+| Developers | [Developer guide](https://asembodiedaisyst.github.io/rebot-control/en/developer/): architecture, conventions, design decisions, testing |
+| AI agents | [AGENTS.md](https://github.com/asEmbodiedAISyst/rebot-control/blob/main/AGENTS.md), [agent guides](https://asembodiedaisyst.github.io/rebot-control/en/agents/), [llms.txt](https://asembodiedaisyst.github.io/rebot-control/llms.txt), [llms-full.txt](https://asembodiedaisyst.github.io/rebot-control/llms-full.txt) |
 
 ## License
 
-MIT, see [LICENSE](LICENSE). The bundled URDF is derived from Seeed Studio's reBot Arm B601-RS files and stays
-under CERN-OHL-W-2.0, see [NOTICE](NOTICE). The library uses [motorbridge](https://pypi.org/project/motorbridge/),
+MIT, see [LICENSE](https://github.com/asEmbodiedAISyst/rebot-control/blob/main/LICENSE). The bundled URDF is derived from Seeed Studio's reBot Arm B601-RS files and stays
+under CERN-OHL-W-2.0, see [NOTICE](https://github.com/asEmbodiedAISyst/rebot-control/blob/main/NOTICE). The library uses [motorbridge](https://pypi.org/project/motorbridge/),
 [Pinocchio](https://github.com/stack-of-tasks/pinocchio) and [MuJoCo](https://mujoco.org).

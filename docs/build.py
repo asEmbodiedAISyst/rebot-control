@@ -68,7 +68,7 @@ REDIRECT = """<!doctype html>
     <link rel="canonical" href="en/">
   </head>
   <body>
-    <p><a href="en/">English</a> | <a href="zh/">简体中文</a></p>
+    <p><a href="en/">English</a> | <a href="zh/">中文</a></p>
   </body>
 </html>
 """

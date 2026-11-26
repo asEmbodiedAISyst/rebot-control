@@ -24,7 +24,7 @@ your loop (30 Hz)  ->  joint target filter  ->  servo loop (150 Hz)  ->  motors 
 A backend connects the control code to an arm. There are two:
 
 - `real`: the RobStride motors on SocketCAN. It needs Linux and the `real` extra.
-- `sim`: a MuJoCo model of the same arm. It runs on any OS and needs the `sim` extra.
+- `sim`: a MuJoCo model of the same arm. It runs on Linux and macOS, and needs the `sim` extra.
 
 The control code is the same for both. A script that runs in simulation runs on the real arm when you change
 `backend="sim"` to `backend="real"`.
