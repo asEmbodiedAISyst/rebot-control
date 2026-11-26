@@ -1,0 +1,22 @@
+rebot-control
+=============
+
+rebot-control is released under the MIT License (see LICENSE), except for the third-party material below,
+which keeps its own licence.
+
+Third-party material
+--------------------
+
+src/rebot_control/assets/b601_rs/rebot_b601_rs_arm.urdf
+    Derived from ReBot_Arm_RS.urdf in Seeed-Projects/reBot-DevArm (Rebot_Arm_description/RS/),
+    Copyright Seeed Studio, licensed under the CERN Open Hardware Licence Version 2 - Weakly Reciprocal
+    (CERN-OHL-W-2.0), full text in src/rebot_control/assets/b601_rs/LICENSE.CERN-OHL-W.
+    Modifications (tools/make_arm_urdf.py): the stock gripper links and joints and all <visual> / <collision>
+    elements are removed; kinematic and inertial parameters are unchanged.
+
+src/rebot_control/configs/tools/stock_gripper.yaml
+    Mass, centre of mass and inertia of the stock gripper are the lumped values of the gripper links of the same
+    URDF (same licence and source).
+
+Default MIT gains in configs/arms/b601_rs.yaml are the Seeed reBot plugin defaults scaled by 0.8 (numbers only).
+No code from Seeed-Projects/reBotArm_control_py is included.

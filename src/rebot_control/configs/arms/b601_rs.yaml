@@ -1,0 +1,83 @@
+# Seeed reBot Arm B601-RS: 6 RobStride motors on SocketCAN, gripper removed (end effectors are tool YAMLs).
+#
+# Units: angles in degrees in this file (converted to rad on load), torques in N*m, gains in N*m/rad and
+# N*m*s/rad (the units of the RobStride MIT frame).
+#
+# Sign convention: raw motor angle = URDF joint angle (verified on the arm with the zero set in Motorbridge
+# Studio), so direction = 1 and offset = 0 for every joint. Change them only if your motors were zeroed or
+# mounted differently.
+#
+# Defaults marked "verified" were used on a real B601-RS.
+
+name: b601_rs
+urdf: b601_rs/rebot_b601_rs_arm.urdf     # relative to rebot_control/assets/ (or an absolute path)
+flange_frame: link6
+joints: [joint1, joint2, joint3, joint4, joint5, joint6]
+
+bus:
+  type: robstride                        # motorbridge RobStride over SocketCAN
+  channel: can0
+  feedback_wait_s: 0.003                 # wait between a zero-gain feedback request and the poll (passive reads)
+
+motors:                                  # one per joint, same order as `joints`
+  - {can_id: 1, feedback_id: 0xFD, model: rs-06, direction: 1.0, offset_deg: 0.0}
+  - {can_id: 2, feedback_id: 0xFD, model: rs-06, direction: 1.0, offset_deg: 0.0}
+  - {can_id: 3, feedback_id: 0xFD, model: rs-06, direction: 1.0, offset_deg: 0.0}
+  - {can_id: 4, feedback_id: 0xFD, model: rs-00, direction: 1.0, offset_deg: 0.0}
+  - {can_id: 5, feedback_id: 0xFD, model: rs-00, direction: 1.0, offset_deg: 0.0}
+  - {can_id: 6, feedback_id: 0xFD, model: rs-00, direction: 1.0, offset_deg: 0.0}
+
+rates:
+  control_hz: 30                         # rate of Cartesian / joint commands (caller loop, Arm.sleep())
+  servo_hz: 150                          # MIT frame streaming rate (verified: no audible 30 Hz steps)
+
+gains:                                   # MIT gains (verified: Seeed plugin defaults x 0.8)
+  kp: [40.0, 120.0, 120.0, 40.0, 40.0, 40.0]
+  kd: [2.4, 8.0, 8.0, 4.0, 3.2, 3.2]
+  gravity_mode_kd: [0.5, 1.0, 1.0, 0.3, 0.2, 0.2]   # damping in gravity-only (hand-guiding) mode
+  ramp_s: 0.5                            # gains and feedforward ramp in when torque is switched on
+
+feedforward:
+  gravity: true
+  gravity_scale: 1.0
+  friction_scale: 0.0                    # 0 until friction is calibrated (rebot-calib friction)
+  tau_max: [10.0, 10.0, 10.0, 5.0, 5.0, 5.0]   # clip of the total feedforward per joint (protects against a wrong model)
+
+# Reflected rotor inertia per joint (kg*m^2): used for the effective inertia in gain tuning and in simulation.
+# Rough estimates; identify or replace when better data is available.
+rotor_inertia: [0.02, 0.02, 0.02, 0.005, 0.005, 0.005]
+
+safety:
+  soft_limits_deg:                       # intersected with the URDF limits (Seeed follower joint_limits)
+    - [-145.0, 145.0]
+    - [0.0, 170.0]
+    - [0.0, 200.0]
+    - [-80.0, 90.0]
+    - [-90.0, 90.0]
+    - [-130.0, 130.0]
+  max_jump_deg: 25.0                     # a target this far from the previous target is refused (verified)
+  max_joint_speed_deg_s: 90.0            # rate limit of the commanded joint target (verified: 3 deg / cycle at 30 Hz)
+  filter_tau_s: 0.1                      # first-order filter on joint targets (verified)
+  max_error_deg: 10.0                    # torque cap: MIT target clamped to measured +- this (verified)
+  lag_deg: 10.0                          # stall detection: lag above this ...
+  stall_time_s: 1.0                      # ... for this long ...
+  stall_progress_deg: 1.0                # ... while moving less than this -> stall
+  on_stall: hold                         # hold (stay enabled, PD hold at the measured pose) | disable (torque off: the arm falls)
+  on_overtemp: disable                   # disable (torque off above temp_stop_c: the arm falls) | hold (keep holding)
+  slow_lag_deg: 20.0                     # Cartesian slow-down starts at this joint lag, frozen at twice it
+  temp_warn_c: 115.0
+  temp_stop_c: 125.0                     # torque off above this
+
+poses:
+  zero_deg: [0, 0, 0, 0, 0, 0]           # folded power-on pose (motor zero)
+  unfold_first: [1, 2]                   # joint indices that leave the folded pose first (shoulder_lift, elbow_flex)
+  fold_stages: [[0, 3, 4, 5], [1, 2]]    # return to zero: base + wrist first, then shoulder + elbow (Seeed safe_zero)
+  move_speed_deg_s: 20.0                 # default speed of slow joint-space moves
+
+# Simulation backend only (MuJoCo): joint damping / dry friction of the simulated arm. These are the "true" values
+# the sim plays back, independent of the friction model used for feedforward.
+sim:
+  physics_hz: 1050
+  damping: [0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
+  frictionloss: [0.05, 0.05, 0.05, 0.05, 0.05, 0.05]
+  torque_noise: 0.0

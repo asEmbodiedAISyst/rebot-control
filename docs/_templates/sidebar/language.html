@@ -1,0 +1,9 @@
+{# Link to the same page of the other language. The API reference and the generated pages exist once only. #}
+{% set same_page = pagename if not (pagename.startswith("apidocs/") or pagename in ("genindex", "py-modindex")) else "index" %}
+<div class="sidebar-tree">
+  <ul>
+    <li class="toctree-l1">
+      <a class="reference external" href="{{ pathto(other_language_root ~ same_page ~ '.html', 1) }}">{{ other_language_label }}</a>
+    </li>
+  </ul>
+</div>

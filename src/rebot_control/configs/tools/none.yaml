@@ -1,0 +1,16 @@
+# Bare flange: TCP at the link6 origin, no payload. Useful for bring-up and for identifying a new tool's payload.
+name: none
+mount_frame: link6
+tcp:
+  xyz: [0.0, 0.0, 0.0]          # m, in the mount frame
+  rpy_deg: [0.0, 0.0, 0.0]      # URDF convention: fixed-axis roll, pitch, yaw
+payload:
+  mass_kg: 0.0
+  com_xyz: [0.0, 0.0, 0.0]
+home_deg: [0.0, 87.8, 68.6, -70.8, 0.0, 0.0]   # flange at about (0.25, 0, 0.25) m, z axis pointing down
+cartesian:                                      # flange limits: keep 12 cm above the table (room for a tool)
+  x: [0.15, 0.40]
+  y: [-0.20, 0.20]
+  z: [0.12, 0.35]
+  max_speed: 0.20
+  max_ang_speed: 1.5

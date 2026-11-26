@@ -1,0 +1,63 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "rebot-control"
+dynamic = ["version"]
+description = "Cartesian control, configurable tools and self-calibration (gravity, payload, friction, TCP, gains) for the Seeed reBot Arm B601-RS"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT AND CERN-OHL-W-2.0"  # the code is MIT; the bundled URDF is CERN-OHL-W-2.0 (see NOTICE)
+license-files = ["LICENSE", "NOTICE", "src/rebot_control/assets/b601_rs/LICENSE.CERN-OHL-W"]
+authors = [{ name = "Jinqi Wei" }]
+keywords = ["robotics", "robot arm", "reBot", "RobStride", "MIT mode", "cartesian control", "calibration"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: POSIX :: Linux",
+    "Topic :: Scientific/Engineering",
+]
+dependencies = [
+    "numpy>=1.24",
+    "pin>=2.7",          # Pinocchio
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+real = ["motorbridge>=0.5.6"]
+sim = ["mujoco>=3.2"]
+docs = ["sphinx>=8", "furo", "myst-parser>=4", "sphinx-autodoc2>=0.5", "sphinx-copybutton"]
+dev = ["pytest>=7", "mujoco>=3.2", "ruff>=0.5"]
+
+[project.urls]
+Homepage = "https://github.com/asEmbodiedAISyst/rebot-control"
+Documentation = "https://asembodiedaisyst.github.io/rebot-control/"
+Repository = "https://github.com/asEmbodiedAISyst/rebot-control"
+Issues = "https://github.com/asEmbodiedAISyst/rebot-control/issues"
+
+[project.scripts]
+rebot-control = "rebot_control.cli:main"
+
+[tool.hatch.version]
+path = "src/rebot_control/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/rebot_control"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "docs", "examples", "tests", "tools", "README.md", "README.zh-CN.md", "LICENSE", "NOTICE", "AGENTS.md",
+           "pyproject.toml"]
+exclude = ["docs/internal", "docs/_build", "docs/apidocs"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 130
+target-version = "py310"
+src = ["src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E741", "B905", "E501"]  # I for inertia matrices; zip(strict=) not needed; long lines tolerated

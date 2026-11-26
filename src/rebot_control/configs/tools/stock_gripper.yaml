@@ -1,0 +1,18 @@
+# Stock Seeed parallel gripper treated as a rigid payload (fingers at q = 0, gripper motor not controlled).
+# Values computed from the upstream URDF (gripper_end + both fingers, expressed in link6); TCP at the fingertips.
+name: stock_gripper
+mount_frame: link6
+tcp:
+  xyz: [0.0, 0.0, 0.15121]
+  rpy_deg: [0.0, 0.0, 0.0]
+payload:
+  mass_kg: 0.8004
+  com_xyz: [-0.000004, -0.000104, 0.063249]
+  inertia: [0.000820, 0.000509, 0.000407, 0.0, 0.0, -0.000001]   # ixx iyy izz ixy ixz iyz about the COM
+home_deg: [0.0, 87.8, 68.6, -70.8, 0.0, 0.0]       # gripper pointing down, TCP at about (0.25, 0, 0.10) m
+cartesian:
+  x: [0.12, 0.42]
+  y: [-0.25, 0.25]
+  z: [0.02, 0.30]
+  max_speed: 0.25
+  max_ang_speed: 2.0

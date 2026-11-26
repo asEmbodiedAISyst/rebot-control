@@ -1,0 +1,23 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv*/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+# calibration output and raw data are per-arm: keep them out of the repository unless you mean to share them
+calibration/
+*.npz
+# local tooling and OS files
+.DS_Store
+.vscode/
+.idea/
+.env
+.coverage
+htmlcov/
+# documentation: build output, generated API pages, and internal notes that are never published
+docs/_build/
+docs/apidocs/
+docs/internal/

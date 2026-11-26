@@ -1,0 +1,21 @@
+# Pusher tool "ip17": printed flange + 10x10 mm rod (30 deg to the flange) + iPhone 17 Pro plate.
+# Values computed from the tool's MuJoCo model, mounted on link6:
+# TCP = rod tip, z along the rod; payload = flange + rod + plate + phone (CAD / estimated masses).
+# Refine with `rebot-control calib tcp` (pivot) and `rebot-control calib payload`.
+name: pusher_ip17
+mount_frame: link6
+tcp:
+  xyz: [-0.09633, 0.0, 0.17218]
+  rpy_deg: [0.0, -60.0, 0.0]
+payload:
+  mass_kg: 0.301
+  com_xyz: [0.023092, 0.036419, 0.062015]
+home_deg: [0.0, 20.0, 28.6, -38.8, 0.0, 0.0]     # tip at about (0.22, 0, 0.10) m, rod (TCP z) pointing straight down
+cartesian:                                         # default Cartesian limits for this tool (base frame, table at z = 0)
+  x: [0.22, 0.56]
+  y: [-0.20, 0.20]
+  z: [0.003, 0.20]
+  max_speed: 0.25          # m/s
+  max_ang_speed: 2.0       # rad/s
+  max_tilt_deg: 30.0       # angle between the TCP z axis and straight down
+  max_yaw_deg: 60.0        # heading of the TCP x axis about world z
